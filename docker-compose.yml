@@ -1,0 +1,40 @@
+version: '3'
+services:
+  mongo1:
+    container_name: mongo1
+    image: "mongo:4.0.10-xenial"
+    ports:
+      - "27020:27017" # host:container
+    volumes:
+      - ~/mongo/mongo1:/data/db
+    networks:
+      - mongo
+    entrypoint: [ "/usr/bin/mongod", "--bind_ip_all", "--replSet", "rep" ]
+  mongo2:
+    container_name: mongo2
+    image: "mongo:4.0.10-xenial"
+    ports:
+      - "27021:27017"
+    volumes:
+      - ~/mongo/mongo2:/data/db
+    networks:
+      - mongo
+    entrypoint: [ "/usr/bin/mongod", "--bind_ip_all", "--replSet", "rep" ]
+    depends_on:
+      - mongo1
+  mongo3:
+    container_name: mongo3
+    image: "mongo:4.0.10-xenial"
+    ports:
+      - "27022:27017"
+    volumes:
+      - ~/mongo/mongo3:/data/db
+    networks:
+      - mongo
+    entrypoint: [ "/usr/bin/mongod", "--bind_ip_all", "--replSet", "rep" ]
+    depends_on:
+      - mongo2
+
+networks:
+  mongo:
+    driver: bridge
