@@ -3,7 +3,7 @@
 #### run command
 ~~~bash
 # in linux
-./setup-for-linux.sh
+bash ./setup-for-linux.sh
 
 # in windows
 setup-for-windows.bat
