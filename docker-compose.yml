@@ -1,37 +1,52 @@
 version: '3'
 services:
   mongo1:
+    build:
+      context: ./mongo
     container_name: mongo1
-    image: "mongo:4.0.10-xenial"
+    image: "mongo-replica-set:base"
     ports:
-      - "27020:27017" # host:container
+      - "27017:27017" # host:container
     volumes:
       - ~/mongo/mongo1:/data/db
     networks:
       - mongo
-    entrypoint: [ "/usr/bin/mongod", "--bind_ip_all", "--replSet", "rep" ]
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: sa
+      MONGO_INITDB_ROOT_PASSWORD: qwe123
+    command: "--bind_ip_all --replSet rep --keyFile /data/keyfile"
   mongo2:
+    build:
+      context: ./mongo
     container_name: mongo2
-    image: "mongo:4.0.10-xenial"
+    image: "mongo-replica-set:base"
     ports:
-      - "27021:27017"
+      - "27018:27017"
     volumes:
       - ~/mongo/mongo2:/data/db
     networks:
       - mongo
-    entrypoint: [ "/usr/bin/mongod", "--bind_ip_all", "--replSet", "rep" ]
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: sa
+      MONGO_INITDB_ROOT_PASSWORD: qwe123
+    command: "--bind_ip_all --replSet rep --keyFile /data/keyfile"
     depends_on:
       - mongo1
   mongo3:
+    build:
+      context: ./mongo
     container_name: mongo3
-    image: "mongo:4.0.10-xenial"
+    image: "mongo-replica-set:base"
     ports:
-      - "27022:27017"
+      - "27019:27017"
     volumes:
       - ~/mongo/mongo3:/data/db
     networks:
       - mongo
-    entrypoint: [ "/usr/bin/mongod", "--bind_ip_all", "--replSet", "rep" ]
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: sa
+      MONGO_INITDB_ROOT_PASSWORD: qwe123
+    command: "--bind_ip_all --replSet rep --keyFile /data/keyfile"
     depends_on:
       - mongo2
 
