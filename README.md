@@ -1,4 +1,4 @@
-# mongo-replica
+# mongodb replica set with authentication
 
 #### run command
 ~~~bash
