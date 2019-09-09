@@ -2,22 +2,14 @@
 
 #### run command
 ~~~bash
-docker-compose up -d
-docker exec -it mongo1 mongo
-~~~
-#### run script in mongo1
-~~~javascript
-rs.initiate({
-  _id: "rep",
-  members: [
-    {_id: 0, host: "mongo1:27017"},
-    {_id: 1, host: "mongo2:27017"},
-    {_id: 2, host: "mongo3:27017"},
-  ]
-});
+# in linux
+./setup-for-linux.sh
+
+# in windows
+setup-for-windows.bat
 ~~~
 
 #### connect
 ~~~
-mongodb://localhost:27020
+mongodb://localhost:27017
 ~~~
